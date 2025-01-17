@@ -1,0 +1,25 @@
+Point-Char: |
+
+Code:
+ (lambda ()
+  (emacs-lisp-mode)
+  (my-expand-snippet-mode)
+  (my-expand-snippet-try-n-xpand-word))
+
+Name: try-n-expand no hits
+
+
+=-=
+foobar|
+=-=
+foobar
+=-=-=
+
+
+Name: Test snippet expansion
+
+=-=
+ ,a |
+=-=
+(and |) 
+=-=-=

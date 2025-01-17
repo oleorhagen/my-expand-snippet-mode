@@ -16,6 +16,7 @@
       t
     nil))
 
+;;; TODO - Not used as a sentinel rn
 (defun mes--current-word-is-a-snippet-p ()
   "Checks if the current word in the pattern is a snippet"
   (interactive)
@@ -32,7 +33,7 @@ snippet."
   (interactive)
   (when (and (derived-mode-p 'prog-mode)
              (mes--is-xpander-key-p)
-             (mes--current-word-is-a-snippet-p))
+             )
     (save-excursion
       (backward-char) ;; Back to the beginning of the word
       (backward-word) ;; Step back over the word itself

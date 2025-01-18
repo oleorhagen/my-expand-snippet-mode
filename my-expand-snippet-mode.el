@@ -30,6 +30,16 @@
         t
       nil)))
 
+(defun mes--prepare-word ()
+  "Remove the surrounding pattern <space> and <comma>, before expanding the snippet"
+  (save-excursion
+    (backward-char)     ;; Back to the beginning of the word
+    (delete-char 1)     ;; Delete the prefix <space>
+    (backward-word)     ;; Step back over the word itself
+    (backward-char)     ;; Back to over the comma
+    (delete-char 1)     ;; Delete the comma
+    (forward-word)))
+
 (defun mes--is-single-comma ()
   "Sentinel for the single comma pattern: <space><,><space>"
   (interactive)
@@ -43,16 +53,9 @@ snippet."
   (cond ((and (derived-mode-p 'prog-mode)
               (mes--is-xpander-key-p)
               )
-         (save-excursion
-           (backward-char)     ;; Back to the beginning of the word
-           (delete-char 1)     ;; Delete the prefix <space>
-           (backward-word)     ;; Step back over the word itself
-           (backward-char)     ;; Back to over the comma
-           (delete-char 1)     ;; Delete the comma
-           (forward-word))
+         (mes--prepare-word)
          (evil-insert-state)       ;; Back over the space
-         (yas-expand)
-         )
+         (yas-expand))
         ((mes--is-single-comma)
          (delete-backward-char 3)
          (yas-insert-snippet)))) ;; Enter insert

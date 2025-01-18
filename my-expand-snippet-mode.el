@@ -77,7 +77,3 @@ snippet."
     (message "My expand snippet mode disabled.")))
 
 (provide 'my-expand-snippet-mode)
-
-;; Local Variables:
-;; read-symbol-shorthands: (("mes-" . "my-expand-snippet-"))
-;; End:

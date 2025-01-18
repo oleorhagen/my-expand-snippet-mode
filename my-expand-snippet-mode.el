@@ -1,6 +1,50 @@
 ;;; my-expand-snippet-mode.el --- Simple snippet expander on <space>, -*- lexical-binding: t -*-
 ;;; # -*- read-symbol-shorthands: (("mes-" . "my-expand-snippet-")) -*-
 
+;; Copyright (C) 2025 Ole P. Orhagen
+
+;; Author: Ole P. Orhagen <ole<at>orhagen.no>
+;; Keywords: yasnippet, autocomplete
+;; Homepage: https://github.com/oleorhagen/my-expand-snippet-mode/
+
+;; This file is free software; you can redistribute it and/or modify
+;; it under the terms of the GNU General Public License as published by
+;; the Free Software Foundation; either version 3, or (at your option)
+;; any later version.
+
+;; This file is distributed in the hope that it will be useful,
+;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;; GNU General Public License for more details.
+
+;; You should have received a copy of the GNU General Public License
+;; along with GNU Emacs.  If not, see <http://www.gnu.org/licenses/>.
+
+;;; Commentary:
+
+;; These definitions let you interact with Prolog in all buffers.
+;; You can consult Prolog programs and evaluate embedded queries.
+
+;; Installation
+;; ============
+;;
+;; Copy my-expand-snippet-mode.el to your load-path and add to your .emacs:
+;;
+;;     (require 'my-expand-snippet-mode)
+;;     (my-expand-snippet-mode)
+;;
+;; Restart Emacs and customize my-expand-snippet-mode with
+;;
+;;     M-x customize-group RET my-expand-snippet-mode RET
+;;
+;; The two most important configuration options are:
+;;
+;;    - `my-expand-snippet-remove-comma-on-snippet-not-found', whether or not to
+;;    - remove the prefix comma if no snippet is found
+
+;; Usage
+;; =====
+;;
 ;;
 ;;; A simple minor-mode for automatically expanding snippets, expanded by a
 ;;; prefix , (comma), and then the snippet name. Expanded once the first space
@@ -9,9 +53,17 @@
 ;;; Real handy for quickly expanding snippets you use a lot.
 ;;
 ;;
+
+;; Tested with Yasnippet, and ert,
+;; using Emacs versions 29.x
+
+;;; Code:
+
 ;;; - On only comma, call yas-insert-snippet -
 ;;
 ;;; TODO - When there is no math, raise an error ?
+;;
+;;; TODO - Switch for not removing comma on no snippet hit
 
 (defun mes--is-xpander-key-p  ()
   "Checks if the preceding word matches the expected <space>,<snippet><space> pattern"

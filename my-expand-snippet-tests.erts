@@ -16,10 +16,28 @@ foobar
 =-=-=
 
 
-Name: Test snippet expansion
+Name: Test snippet expansion with a prefixed space
 
 =-=
- ,a |
+,a |
 =-=
-(and |) 
+(and |)
 =-=-=
+
+
+Name: Test snippet expansion _without_ a prefixed space
+
+=-=
+,a |
+=-=
+(and |)
+=-=-=
+
+
+;; Name: Test snippet search on single comma
+
+;; =-=
+;;  , |
+;; =-=
+
+;; =-=-=

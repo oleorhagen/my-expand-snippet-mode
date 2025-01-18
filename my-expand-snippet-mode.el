@@ -57,7 +57,7 @@ snippet."
          (evil-insert-state)       ;; Back over the space
          (yas-expand))
         ((mes--is-single-comma)
-         (delete-backward-char 3)
+         (delete-backward-char 3) ;; Delete the whole pattern '<space><comma><space>'
          (yas-insert-snippet)))) ;; Enter insert
 
 ;;;###autoload

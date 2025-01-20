@@ -19,9 +19,9 @@ foobar
 Name: Test snippet expansion with a prefixed space
 
 =-=
-,a |
+ ,a |
 =-=
-(and |)
+ (and |)
 =-=-=
 
 

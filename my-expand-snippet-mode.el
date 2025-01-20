@@ -1,5 +1,5 @@
 ;;; my-expand-snippet-mode.el --- Simple snippet expander on <space>, -*- lexical-binding: t -*-
-;;; # -*- read-symbol-shorthands: (("mes-" . "my-expand-snippet-")) -*-
+;;; -*- read-symbol-shorthands: (("mes-" . "my-expand-snippet-")) -*-
 
 ;; Copyright (C) 2025 Ole P. Orhagen
 
@@ -61,26 +61,23 @@
 
 ;;; - On only comma, call yas-insert-snippet -
 ;;
-;;; TODO - When there is no math, raise an error ?
+;;; TODO - When there is no match, raise an error ?
 ;;
-;;; TODO - Switch for not removing comma on no snippet hit
+
 
 (defun mes--is-xpander-key-p  ()
   "Checks if the preceding word matches the expected <space>,<snippet><space> pattern"
   (interactive)
-  (if (looking-back ",\\w+ " (point-at-bol))
-      t
-    nil))
+  (looking-back ",\\w+ " (point-at-bol)))
 
-;;; TODO - Not used as a sentinel rn
+
 (defun mes--current-word-is-a-snippet-p ()
   "Checks if the current word in the pattern is a snippet"
   (interactive)
   (save-excursion
     (backward-char)
-    (if (yas-lookup-snippet (word-at-point t))
-        t
-      nil)))
+    (member (word-at-point t) (yas-active-keys))))
+
 
 (defun mes--prepare-word ()
   "Remove the surrounding pattern <space> and <comma>, before expanding the snippet"
@@ -91,6 +88,7 @@
     (backward-char)     ;; Back to over the comma
     (delete-char 1)     ;; Delete the comma
     (forward-word)))
+
 
 (defun mes--is-single-comma ()
   "Sentinel for the single comma pattern: <space><,><space>"
@@ -103,7 +101,9 @@ set out by mes--is-xpander-key-p, and the word is a yasnippet
 snippet."
   (interactive)
   (cond ((and (derived-mode-p 'prog-mode)
+              (equal (string (char-before)) " ") ;; Only try-and-xpand on the last <space> insert
               (mes--is-xpander-key-p)
+              (mes--current-word-is-a-snippet-p) ;; Only run the body when the word is a snippet
               )
          (mes--prepare-word)
          (evil-insert-state)       ;; Back over the space
@@ -116,7 +116,7 @@ snippet."
 (define-minor-mode my-expand-snippet-mode
   "If enabled, expands snippets automatically from Yasnippet if prefixed with comma"
   :lighter "XPand"
-  :require 'yasnippet
+  :require '( yasnippet evil )
   :global nil
   :version "1.0.0"
   (if my-expand-snippet-mode
@@ -129,3 +129,7 @@ snippet."
     (message "My expand snippet mode disabled.")))
 
 (provide 'my-expand-snippet-mode)
+
+;; Local Variables:
+;; read-symbol-shorthands: (("mes-" . "my-expand-snippet-"))
+;; End:
